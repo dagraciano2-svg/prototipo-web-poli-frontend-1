@@ -1,0 +1,91 @@
+    :root {
+            --brand-primary: #0f172a;
+            --brand-accent: #dc2626;
+            --brand-light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--brand-light);
+            color: #334155;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        /* Hero Banner */
+        .hero-welcome {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 3.5rem 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.3);
+        }
+
+        /* Card de Noticia */
+        .news-card {
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.12);
+        }
+
+        .news-card img {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .news-card .card-body {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        /* Botón de Favorito Animado */
+        .btn-fav {
+            color: #cbd5e1;
+            transition: color 0.2s ease, transform 0.2s ease;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+        }
+
+        .btn-fav.active, .btn-fav:hover {
+            color: #dc2626;
+            transform: scale(1.15);
+        }
+
+        /* Ajustes de modales */
+        .modal-header-custom {
+            background-color: var(--brand-primary);
+            color: white;
+        }
+
+        /* Transiciones entre secciones */
+        .app-section {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .app-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }

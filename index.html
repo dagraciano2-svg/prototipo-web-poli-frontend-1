@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Informador Digital - Portal de Noticias</title>
+    
+    <!-- CSS Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="css/customs.css">
+</head>
+<body>
+
+    <!-- Header con menú de navegación navbar de Bootstrap -->
+    <header class="sticky-top shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand d-flex items-center gap-2 font-weight-bold" href="#" onclick="navigateTo('home')">
+                    <i class="fa-solid fa-newspaper text-danger fs-3"></i>
+                    <div>
+                        <!-- H1 con el nombre del medio -->
+                        <h1 class="h4 mb-0 fw-bold tracking-tight text-white d-inline-block">El Informador <span class="text-danger">Digital</span></h1>
+                    </div>
+                </a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fw-semibold text-uppercase fs-7">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="nav-home" href="#" onclick="navigateTo('home')">
+                                <i class="fa-solid fa-house me-1"></i> Inicio
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="nav-catalog" href="#" onclick="navigateTo('catalog')">
+                                <i class="fa-solid fa-layer-group me-1"></i> Catálogo
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link position-relative" id="nav-favorites" href="#" onclick="navigateTo('favorites')">
+                                <i class="fa-solid fa-heart text-danger me-1"></i> Favoritos
+                                <!-- Indicador/contador de favoritos -->
+                                <span id="fav-count-badge" class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle">0</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="nav-contact" href="#" onclick="navigateTo('contact')">
+                                <i class="fa-solid fa-envelope me-1"></i> Contacto
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="nav-admin" href="#" onclick="navigateTo('admin')">
+                                <i class="fa-solid fa-sliders me-1"></i> Gestión (CRUD)
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container my-4">
+
+        <!-- Página de Inicio (Home) -->
+        <section id="section-home" class="app-section active">
+            <!-- Sección de Bienvenida  -->
+            <div class="hero-welcome text-center text-md-start">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h2 class="display-5 fw-bold text-white mb-3">Información veraz, al instante</h2>
+                        <p class="lead text-slate-300 mb-4">Bienvenido a <strong>El Informador Digital</strong>. Descubra los acontecimientos más relevantes de política, economía, deportes y tecnología redactados con rigor periodístico.</p>
+                        <div class="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start">
+                            <!-- Llamados a la Acción -->
+                            <button class="btn btn-danger btn-lg fw-bold" onclick="navigateTo('catalog')">
+                                <i class="fa-solid fa-newspaper me-1"></i> Explorar Noticias
+                            </button>
+                            <button class="btn btn-outline-light btn-lg fw-semibold" onclick="navigateTo('contact')">
+                                <i class="fa-solid fa-paper-plane me-1"></i> Unirse a la Redacción
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center d-none d-md-block">
+                        <i class="fa-solid fa-globe fa-8x text-danger opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de Noticias Destacadas -->
+            <div class="d-flex justify-content-between items-center border-bottom pb-2 mb-4">
+                <h2 class="h3 fw-bold text-dark m-0">
+                    <i class="fa-solid fa-star text-warning me-2"></i>Noticias Destacadas
+                </h2>
+                <a href="#" class="text-danger fw-semibold text-decoration-none" onclick="navigateTo('catalog')">Ver todas &rarr;</a>
+            </div>
+
+            <div id="home-featured-grid" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
+                <!-- Se inyectan dinámicamente las cards principales -->
+            </div>
+        </section>
+
+        <!-- Visualización de Noticias (Catálogo Completo) -->
+        <section id="section-catalog" class="app-section">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+                <div>
+                    <h2 class="h3 fw-bold text-dark m-0">Catálogo General de Noticias</h2>
+                    <p class="text-muted m-0">Explore todas nuestras notas ordenadas taxonómicamente.</p>
+                </div>
+                
+                <!-- Filtro por categoría -->
+                <div class="btn-group" role="group" aria-label="Filtro de Categorías">
+                    <button type="button" class="btn btn-outline-dark active" onclick="filterCatalog('Todos', this)">Todos</button>
+                    <button type="button" class="btn btn-outline-dark" onclick="filterCatalog('Política', this)">Política</button>
+                    <button type="button" class="btn btn-outline-dark" onclick="filterCatalog('Economía', this)">Economía</button>
+                    <button type="button" class="btn btn-outline-dark" onclick="filterCatalog('Deportes', this)">Deportes</button>
+                    <button type="button" class="btn btn-outline-dark" onclick="filterCatalog('Tecnología', this)">Tecnología</button>
+                </div>
+            </div>
+
+            <!-- Grid de Tarjetas (Cards) de Noticias -->
+            <div id="catalog-cards-grid" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <!-- cards dinámicos -->
+            </div>
+        </section>
+
+        <!-- Gestión de Favoritos -->
+        <section id="section-favorites" class="app-section">
+            <div class="border-bottom pb-2 mb-4">
+                <h2 class="h3 fw-bold text-dark m-0">
+                    <i class="fa-solid fa-heart text-danger me-2"></i>Mis Noticias Favoritas
+                </h2>
+                <p class="text-muted">Colección de artículos guardados en su almacenamiento local (localStorage).</p>
+            </div>
+
+            <div id="favorites-cards-grid" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <!-- Se renderizan los favoritos guardados -->
+            </div>
+
+            <div id="empty-favorites-alert" class="alert alert-info text-center my-5 p-5 d-none">
+                <i class="fa-regular fa-folder-open fa-3x mb-3 text-info"></i>
+                <h3 class="h5 fw-bold">Aún no tiene noticias favoritas</h3>
+                <p class="mb-3">Haga clic en el ícono de corazón <i class="fa-regular fa-heart text-danger"></i> en cualquier noticia para guardarla aquí.</p>
+                <button class="btn btn-primary" onclick="navigateTo('catalog')">Explorar Catálogo</button>
+            </div>
+        </section>
+
+        <!-- Página de Contacto con Validaciones -->
+        <section id="section-contact" class="app-section">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-header bg-dark text-white p-3">
+                            <h2 class="h4 mb-0 fw-bold"><i class="fa-solid fa-envelope-open-text me-2"></i>Contacto con la Redacción</h2>
+                        </div>
+                        <div class="card-body p-4">
+                            
+                            <!-- Alerta de Confirmación de Envío Exitoso -->
+                            <div id="contact-success-toast" class="alert alert-success alert-dismissible fade show d-none" role="alert">
+                                <i class="fa-solid fa-circle-check me-2"></i>
+                                <strong>¡Mensaje Enviado!</strong> Hemos recibido su consulta. Nuestro equipo se pondrá en contacto pronto.
+                                <button type="button" class="btn-close" onclick="this.parentElement.classList.add('d-none')"></button>
+                            </div>
+
+                            <!-- Formulario con atributos semánticos: fieldset, legend, label  -->
+                            <form id="contact-form" class="needs-validation" novalidate onsubmit="submitContactForm(event)">
+                                
+                                <fieldset class="border p-3 rounded mb-4">
+                                    <legend class="float-none w-auto px-2 fs-6 fw-bold text-primary">Información Personal</legend>
+                                    
+                                    <div class="mb-3">
+                                        <label for="contact-name" class="form-label font-weight-bold">Nombre Completo <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="contact-name" name="name" required placeholder="Ej. Carlos Mendoza">
+                                        <div class="invalid-feedback">Por favor ingrese su nombre completo.</div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="contact-email" class="form-label">Correo Electrónico <span class="text-danger">*</span></label>
+                                        <input type="email" class="form-control" id="contact-email" name="email" required placeholder="nombre@ejemplo.com">
+                                        <div class="invalid-feedback">Ingrese una dirección de correo electrónico válida.</div>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset class="border p-3 rounded mb-4">
+                                    <legend class="float-none w-auto px-2 fs-6 fw-bold text-primary">Detalle de la Consulta</legend>
+
+                                    <div class="mb-3">
+                                        <label for="contact-subject" class="form-label">Asunto / Noticia Relacionada <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="contact-subject" name="subject" required placeholder="Motivo de su mensaje">
+                                        <div class="invalid-feedback">Especifique el asunto de su comunicación.</div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="contact-message" class="form-label">Mensaje <span class="text-danger">*</span></label>
+                                        <textarea class="form-control" id="contact-message" name="message" rows="4" required placeholder="Escriba su mensaje en detalle..."></textarea>
+                                        <div class="invalid-feedback">El mensaje no puede estar vacío.</div>
+                                    </div>
+
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" value="" id="contact-terms" required checked>
+                                        <label class="form-check-label" for="contact-terms">
+                                            Acepto los términos de tratamiento de datos personales.
+                                        </label>
+                                        <div class="invalid-feedback">Debe aceptar los términos para enviar.</div>
+                                    </div>
+                                </fieldset>
+
+                                <div class="d-flex justify-content-end gap-2">
+                                    <button type="reset" class="btn btn-outline-secondary">Limpiar</button>
+                                    <button type="submit" class="btn btn-danger fw-bold">Enviar Mensaje</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gestión Básica de Noticias (Mini CRUD) -->
+        <section id="section-admin" class="app-section">
+            <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-4">
+                <div>
+                    <h2 class="h3 fw-bold text-dark m-0"><i class="fa-solid fa-gears me-2"></i>Panel CRUD de Noticias</h2>
+                    <p class="text-muted m-0">Administración de publicaciones registradas en la plataforma.</p>
+                </div>
+                <button class="btn btn-danger fw-bold" onclick="openCreateNewsModal()">
+                    <i class="fa-solid fa-plus me-1"></i> Nueva Noticia
+                </button>
+            </div>
+
+            <!-- Tabla de Administración -->
+            <div class="table-responsive bg-white rounded shadow-sm border">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Imagen</th>
+                            <th scope="col">Titular</th>
+                            <th scope="col">Categoría</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col" class="text-end">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="crud-news-table-body">
+                        <!-- Carga dinámica de filas CRUD -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal para Detalle de Noticia -->
+    <div class="modal fade" id="newsDetailModal" tabindex="-1" aria-labelledby="newsDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header modal-header-custom">
+                    <h3 class="modal-title h5 fw-bold" id="modal-detail-title">Cargando...</h3>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body p-4" id="modal-detail-body">
+                    <!-- Contenido dinámico del detalle -->
+                </div>
+                <div class="modal-footer bg-light d-flex justify-content-between">
+                    <button id="modal-btn-contact-about" class="btn btn-outline-dark" onclick="contactAboutThisNews()">
+                        <i class="fa-solid fa-envelope me-1"></i> Consultar sobre esta noticia
+                    </button>
+                    <div class="d-flex gap-2">
+                        <button id="modal-btn-fav" class="btn btn-outline-danger" onclick="toggleModalFavorite()">
+                            <i class="fa-regular fa-heart me-1"></i> Favorito
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Formulario Crear/Editar Noticia (Mini CRUD) -->
+    <div class="modal fade" id="crudNewsModal" tabindex="-1" aria-labelledby="crudNewsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h3 class="modal-title h5 fw-bold" id="crudModalTitle">Publicar Nueva Noticia</h3>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <form id="crud-news-form" class="needs-validation" novalidate onsubmit="saveNewsCrud(event)">
+                    <div class="modal-body p-4">
+                        <input type="hidden" id="crud-news-id" value="">
+
+                        <div class="mb-3">
+                            <label for="crud-title" class="form-label font-weight-bold">Titular de la Noticia <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="crud-title" required placeholder="Titular descriptivo">
+                            <div class="invalid-feedback">El título es obligatorio.</div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="crud-category" class="form-label">Categoría <span class="text-danger">*</span></label>
+                                <select class="form-select" id="crud-category" required>
+                                    <option value="Política">Política</option>
+                                    <option value="Economía">Economía</option>
+                                    <option value="Deportes">Deportes</option>
+                                    <option value="Tecnología">Tecnología</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="crud-image" class="form-label">URL Imagen Representativa</label>
+                                <input type="url" class="form-control" id="crud-image" placeholder="https://ejemplo.com/imagen.jpg">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="crud-summary" class="form-label">Descripción Breve (Extracto) <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="crud-summary" rows="2" required placeholder="Resumen corto para la tarjeta"></textarea>
+                            <div class="invalid-feedback">El resumen es obligatorio.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="crud-content" class="form-label">Contenido Completo <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="crud-content" rows="5" required placeholder="Cuerpo completo del artículo en párrafos"></textarea>
+                            <div class="invalid-feedback">El contenido completo es requerido.</div>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="crud-featured">
+                            <label class="form-check-label" for="crud-featured">
+                                Destacar esta noticia en la Página de Inicio (Home)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger fw-bold">Guardar Publicación</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer con información general -->
+    <footer class="bg-dark text-light py-4 mt-auto border-top border-secondary">
+        <div class="container">
+            <div class="row gy-3">
+                <div class="col-md-6">
+                    <h2 class="h5 fw-bold text-white">El Informador Digital</h2>
+                    <p class="small text-secondary mb-0">Portal de noticias independiente comprometido con la veracidad, objetividad y actualidad periodística.</p>
+                </div>
+                <div class="col-md-3">
+                    <h3 class="h6 fw-bold text-uppercase text-white">Secciones</h3>
+                    <ul class="list-unstyled small text-secondary">
+                        <li><a href="#" onclick="navigateTo('catalog')" class="text-decoration-none text-secondary">Política</a></li>
+                        <li><a href="#" onclick="navigateTo('catalog')" class="text-decoration-none text-secondary">Economía</a></li>
+                        <li><a href="#" onclick="navigateTo('catalog')" class="text-decoration-none text-secondary">Deportes & Tecnología</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h3 class="h6 fw-bold text-uppercase text-white">Contacto</h3>
+                    <p class="small text-secondary mb-1"><i class="fa-solid fa-location-dot me-1"></i>Cra 125 96-9, Apartadó ANT</p>
+                    <p class="small text-secondary mb-0"><i class="fa-solid fa-phone me-1"></i> +57 (605) 0000 00 000</p>
+                </div>
+            </div>
+            <hr class="my-3 border-secondary">
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center small text-secondary">
+                <p class="mb-0">&copy; 2026 El Informador Digital S.A. Todos los derechos reservados.</p>
+                <div class="d-flex gap-3 mt-2 mt-sm-0">
+                    <a href="#" class="text-secondary"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" class="text-secondary"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="text-secondary"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5.3 JS Bundle con Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Funcionalidades en javascript-->
+    <script src="js/customs.js"></script>
+
+</body>
+</html>
